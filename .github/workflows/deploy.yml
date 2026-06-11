@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy Astro to Pages
 
 on:
   push:
@@ -15,7 +15,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: withastro/action@v2
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          
+      - run: npm install
+      - run: npm run build
+      
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
