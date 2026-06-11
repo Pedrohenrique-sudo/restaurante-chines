@@ -1,0 +1,63 @@
+---
+import ParticleBackground from '../three/ParticleBackground.astro';
+---
+
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <ParticleBackground />
+  
+  <!-- Caractere gigante atrás -->
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
+    <span class="text-[40vw] font-chinese text-gold/[0.02] leading-none">龍</span>
+  </div>
+
+  <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+    <p class="font-chinese text-gold/60 text-xl md:text-2xl mb-6 opacity-0 hero-sub">金龙餐厅</p>
+    
+    <h1 class="section-title opacity-0 hero-title">
+      <span class="block text-cream">DRAGÃO</span>
+      <span class="block text-gradient text-[1.2em] mt-2">DOURADO</span>
+    </h1>
+    
+    <p class="text-cream/50 text-lg md:text-xl max-w-2xl mx-auto mt-8 mb-12 opacity-0 hero-desc font-serif leading-relaxed">
+      Onde a tradição milenar encontra a sofisticação contemporânea
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-5 justify-center opacity-0 hero-btns">
+      <a href="/restaurante-chines/#reservas" class="btn-primary text-center animate-pulse-glow text-base">
+        🏮 Reservar Mesa
+      </a>
+      <a href="/restaurante-chines/#menu" class="btn-outline text-center text-base">
+        📜 Explorar Menu
+      </a>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-0 hero-scroll">
+      <div class="flex flex-col items-center gap-3 text-gold/30">
+        <span class="text-xs tracking-[0.3em] font-serif">SCROLL</span>
+        <svg width="20" height="30" viewBox="0 0 20 30" class="animate-bounce">
+          <rect x="8" y="2" width="4" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1"/>
+          <circle cx="10" cy="24" r="2" fill="currentColor" opacity="0.5"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import gsap from 'gsap';
+  
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  if (!prefersReducedMotion) {
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 1 });
+    
+    tl.fromTo('.hero-sub', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8 })
+      .fromTo('.hero-title', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1 }, '-=0.4')
+      .fromTo('.hero-desc', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 }, '-=0.3')
+      .fromTo('.hero-btns', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.2')
+      .fromTo('.hero-scroll', { opacity: 0 }, { opacity: 1, duration: 0.5 });
+  } else {
+    gsap.set(['.hero-sub', '.hero-title', '.hero-desc', '.hero-btns', '.hero-scroll'], { opacity: 1, y: 0 });
+  }
+</script>

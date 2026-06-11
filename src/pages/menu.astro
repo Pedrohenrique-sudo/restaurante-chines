@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const categorias = [
+  {
+    nome: 'Entradas',
+    chines: '前菜',
+    pratos: [
+      { nome: 'Rolinho Primavera Imperial', desc: 'Massa crocante recheada com legumes e camarão', preco: 'R$ 52', img: 'https://images.unsplash.com/photo-1606525437817-0045c9d3e84c?w=400&q=80' },
+      { nome: 'Guioza de Porco', desc: '6 unidades grelhadas com molho ponzu', preco: 'R$ 48', img: 'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=400&q=80' },
+      { nome: 'Sopa Wonton', desc: 'Caldo de frango com wontons artesanais', preco: 'R$ 42', img: 'https://images.unsplash.com/photo-1541696490-8744a5dc0228?w=400&q=80' },
+    ]
+  },
+  {
+    nome: 'Pratos Principais',
+    chines: '主菜',
+    pratos: [
+      { nome: 'Pato de Pequim', desc: 'Pato assado com pele crocante, panquecas e molho hoisin', preco: 'R$ 189', img: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&q=80' },
+      { nome: 'Kung Pao Chicken', desc: 'Frango wok com amendoim e pimentas Sichuan', preco: 'R$ 86', img: 'https://images.unsplash.com/photo-1525755662778-989d0524087e?w=400&q=80' },
+      { nome: 'Mapo Tofu', desc: 'Tofu sedoso em molho picante de feijão fermentado', preco: 'R$ 72', img: 'https://images.unsplash.com/photo-1582452919408-c5244d33d0be?w=400&q=80' },
+      { nome: 'Salmão Teriyaki', desc: 'Salmão grelhado com glaze de teriyaki e gergelim', preco: 'R$ 129', img: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400&q=80' },
+      { nome: 'Lamen Tonkotsu', desc: 'Caldo de porco 18h, ovo marinado e porco chashu', preco: 'R$ 76', img: 'https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80' },
+      { nome: 'Arroz Chaufa', desc: 'Arroz frito com legumes, ovos e carne à escolha', preco: 'R$ 62', img: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&q=80' },
+    ]
+  },
+  {
+    nome: 'Sobremesas',
+    chines: '甜品',
+    pratos: [
+      { nome: 'Mochi de Matcha', desc: '3 unidades artesanais com recheio de creme', preco: 'R$ 38', img: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&q=80' },
+      { nome: 'Pudim de Gengibre', desc: 'Sobremesa tradicional chinesa com calda de caramelo', preco: 'R$ 34', img: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&q=80' },
+      { nome: 'Fruta Dragão', desc: 'Pitaya fresca com sorvete de lichia e mel', preco: 'R$ 42', img: 'https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=400&q=80' },
+    ]
+  }
+];
+---
+
+<Layout title="Menu Completo | Dragão Dourado" description="Confira nosso cardápio completo com entradas, pratos principais e sobremesas.">
+  
+  <section class="relative z-10 pt-40 pb-32 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-20 reveal">
+        <p class="text-gold/50 text-sm tracking-[0.3em] uppercase mb-4">菜单</p>
+        <h1 class="section-title text-gradient mb-8">Menu</h1>
+        <div class="w-24 h-[1px] bg-gradient-to-r from-gold/60 to-transparent mx-auto line-draw"></div>
+        <p class="text-cream/30 text-lg mt-8 font-serif italic">Uma jornada gastronômica pela China milenar</p>
+      </div>
+
+      {categorias.map(cat => (
+        <div class="mb-24 reveal">
+          <div class="text-center mb-16">
+            <p class="text-gold/40 text-2xl font-serif mb-2">{cat.chines}</p>
+            <h2 class="text-4xl font-serif text-cream">{cat.nome}</h2>
+            <div class="w-24 h-[1px] bg-gold/30 mx-auto mt-6 line-draw"></div>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {cat.pratos.map(prato => (
+              <div class="glass-card overflow-hidden group cursor-pointer reveal-card">
+                <div class="h-56 overflow-hidden">
+                  <img src={prato.img} alt={prato.nome} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&q=80'" />
+                </div>
+                <div class="p-6">
+                  <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-gold font-serif text-xl">{prato.nome}</h3>
+                    <span class="text-gradient font-bold">{prato.preco}</span>
+                  </div>
+                  <p class="text-cream/30 text-sm">{prato.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>

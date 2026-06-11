@@ -1,0 +1,49 @@
+<section id="chef" class="relative z-10 py-32 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div class="text-center lg:text-left">
+        <p class="section-subtitle mb-4">主厨</p>
+        <h2 class="section-title text-gradient mb-8">Chef Antonio Danilo</h2>
+        
+        <div class="space-y-6 text-cream/50 leading-relaxed">
+          <p>
+            Descendente de uma linhagem de chefs que serviram a dinastia Qing, 
+            o <strong class="text-gold">Chef Antonio Danilo</strong> traz consigo segredos culinários 
+            de mais de 300 anos de tradição.
+          </p>
+          <p>
+            Formado no Le Cordon Bleu Paris e com passagens por restaurantes 3 estrelas Michelin 
+            em Hong Kong, ele une o melhor das técnicas ocidentais à essência da cozinha chinesa.
+          </p>
+        </div>
+
+        <div class="mt-10 grid grid-cols-3 gap-6">
+          {[
+            { number: '38+', label: 'Anos de tradição' },
+            { number: '12', label: 'Premiações' },
+            { number: '3', label: 'Gerações' },
+          ].map(stat => (
+            <div class="text-center">
+              <p class="text-3xl font-serif text-gradient">{stat.number}</p>
+              <p class="text-cream/30 text-xs mt-2">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+
+        <blockquote class="mt-10 pl-6 border-l-2 border-gold/30 italic text-cream/40">
+          "Cozinhar é honrar os ancestrais e alimentar a alma."
+          <cite class="block text-gold/60 text-sm mt-2 not-italic">— Chef Antonio Danilo</cite>
+        </blockquote>
+      </div>
+
+      <div class="glass-card p-8 text-center ornament-corner">
+        <div class="text-[12rem] leading-none mb-4">👨‍🍳</div>
+        <p class="font-chinese text-gold/60 text-2xl">安东尼奥·达尼洛</p>
+        <p class="text-cream/30 text-sm mt-2">Chef Executivo</p>
+        <div class="mt-6 pt-6 border-t border-gold/10">
+          <p class="text-cream/20 text-xs tracking-[0.3em]">LE CORDON BLEU • MICHELIN • HERANÇA IMPERIAL</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

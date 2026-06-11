@@ -1,0 +1,65 @@
+---
+// Vídeos temáticos de culinária chinesa
+// Fallback para imagem se vídeo não carregar
+---
+
+<div class="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+  <!-- Overlay escuro primeiro -->
+  <div class="absolute inset-0 bg-black/70 z-[2]"></div>
+  
+  <!-- Padrão chinês sutil -->
+  <div class="absolute inset-0 z-[3] opacity-[0.03]" style="background-image: repeating-linear-gradient(45deg, #D4A017 0px, #D4A017 1px, transparent 1px, transparent 30px);"></div>
+  
+  <!-- Vídeo 1: Close-up de comida chinesa (dumplings/sushi sendo preparados) -->
+  <video 
+    autoplay 
+    muted 
+    loop 
+    playsinline 
+    class="absolute inset-0 w-full h-full object-cover z-[1]"
+    poster="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1920&q=80"
+  >
+    <!-- Close-up de dim sum sendo cozido no vapor -->
+    <source src="https://cdn.coverr.co/videos/coverr-making-dumplings-5244/1080p.mp4" type="video/mp4">
+  </video>
+  
+  <!-- Segundo vídeo como alternativa (wok/fogão chinês) -->
+  <video 
+    autoplay 
+    muted 
+    loop 
+    playsinline 
+    class="absolute inset-0 w-full h-full object-cover z-[1] hidden"
+    poster="https://images.unsplash.com/photo-1555126634-323283e090fa?w=1920&q=80"
+  >
+    <source src="https://cdn.coverr.co/videos/coverr-cooking-in-a-wok-9829/1080p.mp4" type="video/mp4">
+  </video>
+</div>
+
+<script>
+  // Tenta carregar o primeiro vídeo, se falhar usa o segundo
+  const videos = document.querySelectorAll('.video-bg');
+  
+  videos.forEach((video, index) => {
+    video.addEventListener('error', () => {
+      // Se falhar, tenta o próximo vídeo ou mostra só a imagem
+      if (videos[index + 1]) {
+        videos[index + 1].classList.remove('hidden');
+      }
+    });
+    
+    video.addEventListener('loadeddata', () => {
+      video.classList.remove('hidden');
+      // Esconde outros vídeos
+      videos.forEach((v, i) => {
+        if (i !== index) v.classList.add('hidden');
+      });
+    });
+  });
+</script>
+
+<style>
+  video::-webkit-media-controls {
+    display: none !important;
+  }
+</style>

@@ -1,0 +1,154 @@
+<header class="fixed top-0 left-0 right-0 z-50 glass border-b border-gold/5 transition-all duration-500" role="banner" id="main-header">
+  <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/restaurante-chines/" class="flex items-center gap-3 group" aria-label="Dragão Dourado - Página inicial">
+      <span class="text-4xl group-hover:scale-110 transition-transform duration-500">🐉</span>
+      <div class="hidden sm:block">
+        <p class="text-gold font-serif text-lg tracking-[0.2em] leading-none">DRAGÃO</p>
+        <p class="text-cream/30 text-xs tracking-[0.4em] leading-none mt-1">DOURADO</p>
+      </div>
+    </a>
+
+    <!-- Menu Desktop -->
+    <ul class="hidden lg:flex items-center gap-10" role="menubar">
+      {[
+        { label: 'Home', href: '/restaurante-chines/' },
+        { label: 'Menu', href: '/restaurante-chines/menu' },
+        { label: 'Sobre', href: '/restaurante-chines/sobre' },
+        { label: 'Galeria', href: '/restaurante-chines/galeria' },
+        { label: 'Reservas', href: '/restaurante-chines/reservas' },
+        { label: 'Contato', href: '/restaurante-chines/contato' },
+      ].map(item => (
+        <li role="none">
+          <a href={item.href} role="menuitem" 
+            class="text-cream/50 hover:text-gold transition-all duration-300 text-sm tracking-[0.15em] uppercase font-serif relative py-2 group">
+            {item.label}
+            <span class="absolute bottom-0 left-0 w-0 h-[1px] bg-gradient-to-r from-gold to-transparent group-hover:w-full transition-all duration-500"></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Botão Reservar Desktop -->
+    <a href="/restaurante-chines/reservas" class="hidden lg:inline-block btn-primary text-xs tracking-[0.2em] animate-pulse-glow">
+      Reservar
+    </a>
+
+    <!-- Botão Hamburguer Premium -->
+    <button id="menu-toggle" class="lg:hidden relative w-10 h-10 flex items-center justify-center group" aria-expanded="false" aria-label="Abrir menu" aria-controls="mobile-menu">
+      <div class="relative w-6 h-5">
+        <span class="absolute left-0 top-0 w-full h-[2px] bg-gold rounded-full transition-all duration-300 origin-center group-hover:bg-gold-light line-top"></span>
+        <span class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-gold rounded-full transition-all duration-300 line-middle"></span>
+        <span class="absolute left-0 bottom-0 w-full h-[2px] bg-gold rounded-full transition-all duration-300 origin-center group-hover:bg-gold-light line-bottom"></span>
+      </div>
+    </button>
+  </nav>
+
+  <!-- Menu Mobile Premium -->
+  <div id="mobile-menu" class="hidden lg:hidden overflow-hidden transition-all duration-500 max-h-0" role="menu" aria-hidden="true">
+    <div class="px-6 pb-8 pt-2 space-y-1">
+      {[
+        { label: '🏠 Home', href: '/restaurante-chines/' },
+        { label: '📜 Menu Completo', href: '/restaurante-chines/menu' },
+        { label: '📖 Nossa História', href: '/restaurante-chines/sobre' },
+        { label: '📸 Galeria', href: '/restaurante-chines/galeria' },
+        { label: '🏮 Reservar Mesa', href: '/restaurante-chines/reservas' },
+        { label: '📞 Contato', href: '/restaurante-chines/contato' },
+      ].map(item => (
+        <a href={item.href} role="menuitem"
+          class="flex items-center gap-3 text-cream/60 hover:text-gold text-lg font-serif py-4 px-4 rounded-xl hover:bg-gold/5 transition-all duration-300 border border-transparent hover:border-gold/10">
+          {item.label}
+        </a>
+      ))}
+      
+      <div class="mt-6 pt-6 border-t border-gold/10">
+        <div class="glass-card p-4 text-center">
+          <p class="text-cream/40 text-xs tracking-wider mb-2">HORÁRIOS</p>
+          <p class="text-gold/60 text-sm font-serif">Ter-Dom: 11h - 23h</p>
+          <p class="text-cream/20 text-xs mt-2">📞 (11) 99999-9999</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const lineTop = document.querySelector('.line-top');
+  const lineMiddle = document.querySelector('.line-middle');
+  const lineBottom = document.querySelector('.line-bottom');
+  
+  let isOpen = false;
+
+  toggle?.addEventListener('click', () => {
+    isOpen = !isOpen;
+    
+    if (isOpen) {
+      // Abrir menu
+      menu.classList.remove('hidden');
+      menu.style.maxHeight = menu.scrollHeight + 'px';
+      toggle.setAttribute('aria-expanded', 'true');
+      menu.setAttribute('aria-hidden', 'false');
+      
+      // Animar hamburguer → X
+      lineTop.style.transform = 'rotate(45deg) translate(5px, 5px)';
+      lineMiddle.style.opacity = '0';
+      lineMiddle.style.transform = 'translateX(-10px)';
+      lineBottom.style.transform = 'rotate(-45deg) translate(5px, -5px)';
+      
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Fechar menu
+      menu.style.maxHeight = '0px';
+      toggle.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+      
+      // Voltar hamburguer
+      lineTop.style.transform = 'rotate(0) translate(0, 0)';
+      lineMiddle.style.opacity = '1';
+      lineMiddle.style.transform = 'translateX(0)';
+      lineBottom.style.transform = 'rotate(0) translate(0, 0)';
+      
+      document.body.style.overflow = '';
+      
+      setTimeout(() => {
+        menu.classList.add('hidden');
+      }, 500);
+    }
+  });
+
+  // Fechar menu ao clicar em link
+  menu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (isOpen) toggle.click();
+    });
+  });
+
+  // Header com efeito de scroll
+  let lastScroll = 0;
+  const header = document.getElementById('main-header');
+  
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll > 100) {
+      header?.classList.add('shadow-2xl', 'shadow-black/50');
+    } else {
+      header?.classList.remove('shadow-2xl', 'shadow-black/50');
+    }
+    
+    lastScroll = currentScroll;
+  }, { passive: true });
+</script>
+
+<style>
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(196, 30, 58, 0.3); }
+    50% { box-shadow: 0 0 40px rgba(196, 30, 58, 0.6); }
+  }
+  
+  .animate-pulse-glow {
+    animation: pulseGlow 2.5s ease-in-out infinite;
+  }
+</style>

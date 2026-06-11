@@ -1,0 +1,19 @@
+<section id="galeria" class="relative z-10 py-32 px-6 bg-[#0A0A0A]">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-20">
+      <p class="section-subtitle mb-4">美食画廊</p>
+      <h2 class="section-title text-gradient">Galeria</h2>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {['🍱', '🥘', '🍜', '🥮', '🍚', '🥠', '🍢', '🧆'].map((emoji, i) => (
+        <div class="glass-card aspect-square flex items-center justify-center text-6xl hover:scale-105 transition-all duration-500 cursor-pointer group relative overflow-hidden">
+          <span class="group-hover:scale-125 transition-transform duration-500">{emoji}</span>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+            <span class="text-cream/80 text-xs font-serif">Prato {i + 1}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

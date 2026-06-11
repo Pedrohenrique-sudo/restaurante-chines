@@ -1,0 +1,60 @@
+<div id="particles" class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true"></div>
+<script>
+  import * as THREE from 'three';
+  
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const container = document.getElementById('particles');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 100);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    
+    renderer.setSize(innerWidth, innerHeight);
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    container?.appendChild(renderer.domElement);
+    
+    const count = innerWidth < 768 ? 300 : 1000;
+    const geo = new THREE.BufferGeometry();
+    const pos = new Float32Array(count * 3);
+    
+    for (let i = 0; i < count * 3; i += 3) {
+      pos[i] = (Math.random() - 0.5) * 25;
+      pos[i+1] = (Math.random() - 0.5) * 15;
+      pos[i+2] = (Math.random() - 0.5) * 10 - 3;
+    }
+    
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    
+    const mat = new THREE.PointsMaterial({
+      size: 0.02,
+      color: 0xD4A017,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      transparent: true,
+      opacity: 0.6,
+    });
+    
+    const points = new THREE.Points(geo, mat);
+    scene.add(points);
+    camera.position.z = 6;
+    
+    let mx = 0, my = 0, tx = 0, ty = 0;
+    document.addEventListener('mousemove', e => { tx = (e.clientX/innerWidth-0.5)*3; ty = (e.clientY/innerHeight-0.5)*2; });
+    
+    function animate() {
+      mx += (tx-mx)*0.03; my += (ty-my)*0.03;
+      points.rotation.y += 0.0003;
+      points.rotation.x += 0.0001;
+      points.position.x = mx;
+      points.position.y = -my;
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    animate();
+    
+    addEventListener('resize', () => {
+      camera.aspect = innerWidth/innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth, innerHeight);
+    });
+  }
+</script>

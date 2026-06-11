@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Sobre | Dragão Dourado" description="Conheça a história do Dragão Dourado, nosso chef e nossa equipe.">
+  
+  <section class="relative z-10 pt-40 pb-32 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-20 reveal">
+        <p class="text-gold/50 text-sm tracking-[0.3em] uppercase mb-4">关于我们</p>
+        <h1 class="section-title text-gradient mb-8">Nossa História</h1>
+        <div class="w-24 h-[1px] bg-gradient-to-r from-gold/60 to-transparent mx-auto line-draw"></div>
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center reveal">
+        <div class="reveal-left">
+          <div class="glass-card p-8 mb-8">
+            <p class="text-cream/40 text-lg leading-relaxed mb-4">
+              Fundado em <strong class="text-gold">1985</strong> pelo Chef Antonio Danilo, o Dragão Dourado nasceu do sonho 
+              de trazer a autêntica culinária imperial chinesa para o Brasil.
+            </p>
+            <p class="text-cream/40 text-lg leading-relaxed mb-4">
+              Descendente de uma linhagem de chefs que serviram a <strong class="text-gold">dinastia Qing</strong>, 
+              Antonio Danilo guarda segredos culinários transmitidos por mais de <strong class="text-gold">300 anos</strong>.
+            </p>
+            <p class="text-cream/40 text-lg leading-relaxed">
+              Formado no <strong class="text-gold">Le Cordon Bleu Paris</strong> e com passagens por restaurantes 
+              3 estrelas Michelin, ele une o melhor das técnicas ocidentais à essência da cozinha chinesa tradicional.
+            </p>
+          </div>
+        </div>
+        <div class="glass-card overflow-hidden reveal-right">
+          <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&q=80" alt="Interior do Dragão Dourado" class="w-full h-[500px] object-cover" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="mt-32 text-center reveal">
+        <h2 class="text-4xl font-serif text-gradient mb-16">Nossos Números</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {[
+            { num: '38+', label: 'Anos de Tradição' },
+            { num: '150+', label: 'Pratos no Menu' },
+            { num: '12', label: 'Premiações' },
+            { num: '50k+', label: 'Clientes' },
+          ].map(stat => (
+            <div class="glass-card p-8 text-center group">
+              <p class="text-5xl font-black text-gradient mb-3">{stat.num}</p>
+              <p class="text-cream/30 text-sm">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

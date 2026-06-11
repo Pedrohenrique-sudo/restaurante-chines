@@ -1,0 +1,65 @@
+<div id="loading-screen" class="fixed inset-0 z-[99999] bg-[#0A0A0A] flex items-center justify-center" role="status" aria-label="Carregando">
+  <div class="text-center relative">
+    <!-- Lanterna chinesa SVG -->
+    <div class="relative mb-10" style="animation: swing 3s ease-in-out infinite; transform-origin: top center;">
+      <svg width="100" height="140" viewBox="0 0 100 140" class="mx-auto">
+        <!-- Corda -->
+        <line x1="50" y1="0" x2="50" y2="20" stroke="#D4A017" stroke-width="1.5"/>
+        <!-- Topo -->
+        <rect x="42" y="18" width="16" height="8" rx="3" fill="#D4A017" opacity="0.8"/>
+        <!-- Corpo -->
+        <ellipse cx="50" cy="70" rx="28" ry="38" fill="none" stroke="#D4A017" stroke-width="1.5"/>
+        <ellipse cx="50" cy="70" rx="28" ry="38" fill="#C41E3A" opacity="0.08"/>
+        <!-- Linhas verticais -->
+        <line x1="50" y1="35" x2="50" y2="105" stroke="#D4A017" stroke-width="0.5" opacity="0.4"/>
+        <line x1="35" y1="40" x2="35" y2="100" stroke="#D4A017" stroke-width="0.5" opacity="0.3"/>
+        <line x1="65" y1="40" x2="65" y2="100" stroke="#D4A017" stroke-width="0.5" opacity="0.3"/>
+        <!-- Franja inferior -->
+        <line x1="50" y1="108" x2="50" y2="125" stroke="#D4A017" stroke-width="1.5"/>
+        <circle cx="50" cy="128" r="3" fill="#D4A017" opacity="0.6"/>
+        <!-- Brilho interno -->
+        <circle cx="50" cy="70" r="14" fill="#F0D060" opacity="0.15">
+          <animate attributeName="r" values="12;18;12" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.1;0.25;0.1" dur="2s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+      
+      <!-- Partículas subindo -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2">
+        {[1,2,3,4,5].map(i => (
+          <div 
+            class="absolute w-1 h-1 bg-gold/40 rounded-full"
+            style={`left: ${(Math.random()-0.5)*40}px; animation: steam ${1.5+Math.random()*2}s ease-out ${i*0.3}s infinite;`}
+          />
+        ))}
+      </div>
+    </div>
+    
+    <p class="text-3xl font-chinese text-gradient mb-3">金龙</p>
+    <p class="text-gold/60 font-serif tracking-[0.3em] text-sm uppercase">Carregando</p>
+  </div>
+</div>
+
+<script>
+  import gsap from 'gsap';
+  
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  if (prefersReducedMotion) {
+    document.getElementById('loading-screen')?.remove();
+  } else {
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const screen = document.getElementById('loading-screen');
+        if (screen) {
+          gsap.to(screen, {
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power2.inOut',
+            onComplete: () => screen.remove(),
+          });
+        }
+      }, 2000);
+    });
+  }
+</script>

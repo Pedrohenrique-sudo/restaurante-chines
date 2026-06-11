@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contato | Dragão Dourado" description="Entre em contato com o Dragão Dourado. Localização, telefone e horários.">
+  
+  <section class="relative z-10 pt-40 pb-32 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-20 reveal">
+        <p class="text-gold/50 text-sm tracking-[0.3em] uppercase mb-4">联系</p>
+        <h1 class="section-title text-gradient mb-8">Contato</h1>
+        <div class="w-24 h-[1px] bg-gradient-to-r from-gold/60 to-transparent mx-auto line-draw"></div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20 reveal">
+        {[
+          { icon: '📍', title: 'Endereço', desc: 'Rua das Orquídeas, 123\nSão Paulo - SP' },
+          { icon: '🕐', title: 'Horários', desc: 'Ter-Dom: 11h às 23h\nSeg: Fechado' },
+          { icon: '📞', title: 'Telefone', desc: '(11) 99999-9999\n(11) 3333-3333' },
+        ].map(item => (
+          <div class="glass-card p-8 text-center group">
+            <span class="text-4xl block mb-4 group-hover:scale-110 transition-transform duration-300">{item.icon}</span>
+            <h3 class="text-gold font-serif text-xl mb-3">{item.title}</h3>
+            <p class="text-cream/30 text-sm whitespace-pre-line">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+      
+      <div class="glass-card p-10 reveal">
+        <form class="space-y-6" action="https://formspree.io/f/seu-id" method="POST">
+          <h2 class="text-2xl font-serif text-gold text-center mb-6">Envie uma Mensagem</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <input type="text" name="nome" placeholder="Nome" required 
+              class="glass-input w-full px-5 py-4 text-cream placeholder-cream/20 text-sm font-serif" />
+            <input type="email" name="email" placeholder="E-mail" required 
+              class="glass-input w-full px-5 py-4 text-cream placeholder-cream/20 text-sm font-serif" />
+          </div>
+          <textarea name="mensagem" rows="4" placeholder="Sua mensagem" required 
+            class="glass-input w-full p-5 text-cream placeholder-cream/20 text-sm font-serif"></textarea>
+          <button type="submit" class="btn-primary w-full text-center text-base">Enviar Mensagem</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</Layout>

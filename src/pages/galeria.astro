@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+
+const fotos = [
+  'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=600&q=80',
+  'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80',
+  'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80',
+  'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=600&q=80',
+  'https://images.unsplash.com/photo-1555126634-323283e090fa?w=600&q=80',
+  'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80',
+  'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=600&q=80',
+  'https://images.unsplash.com/photo-1579027989536-b7b1f875659b?w=600&q=80',
+];
+---
+
+<Layout title="Galeria | Dragão Dourado" description="Conheça nosso ambiente, pratos e momentos especiais.">
+  
+  
+  <section class="relative z-10 pt-40 pb-32 px-6">
+    <div class="max-w-7xl mx-auto">
+      <p class="text-gold/60 text-center text-sm tracking-[0.3em] uppercase mb-4">美食画廊</p>
+      <h1 class="section-title text-gradient text-center mb-20">Galeria</h1>
+      
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {fotos.map((foto, i) => (
+          <div class="glass-card overflow-hidden group cursor-pointer aspect-square">
+            <img src={foto} alt={`Dragão Dourado - Foto ${i+1}`} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

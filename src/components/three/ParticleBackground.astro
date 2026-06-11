@@ -1,0 +1,81 @@
+<div id="particle-bg" class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true"></div>
+
+<script>
+  import * as THREE from 'three';
+  
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = window.innerWidth < 768;
+  
+  if (!prefersReducedMotion) {
+    const container = document.getElementById('particle-bg');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !isMobile });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container?.appendChild(renderer.domElement);
+    
+    // Partículas
+    const particleCount = isMobile ? 400 : 1500;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+    
+    for (let i = 0; i < particleCount * 3; i += 3) {
+      positions[i] = (Math.random() - 0.5) * 30;
+      positions[i + 1] = (Math.random() - 0.5) * 20;
+      positions[i + 2] = (Math.random() - 0.5) * 15 - 2;
+      
+      const isGold = Math.random() < 0.7;
+      colors[i] = isGold ? 0.83 : 0.77;
+      colors[i + 1] = isGold ? 0.63 : 0.12;
+      colors[i + 2] = isGold ? 0.09 : 0.23;
+    }
+    
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    
+    const material = new THREE.PointsMaterial({
+      size: isMobile ? 0.04 : 0.025,
+      vertexColors: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      transparent: true,
+      opacity: 0.7,
+    });
+    
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+    camera.position.z = 8;
+    
+    // Mouse tracking
+    let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+      targetX = (e.clientX / window.innerWidth - 0.5) * 3;
+      targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+    });
+    
+    function animate() {
+      mouseX += (targetX - mouseX) * 0.03;
+      mouseY += (targetY - mouseY) * 0.03;
+      
+      particles.rotation.y += 0.0001;
+      particles.rotation.x += 0.00005;
+      particles.position.x = mouseX;
+      particles.position.y = -mouseY;
+      
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    
+    animate();
+    
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  }
+</script>

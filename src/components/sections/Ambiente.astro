@@ -1,0 +1,24 @@
+<section id="ambiente" class="relative z-10 py-32 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-20">
+      <p class="section-subtitle mb-4">环境</p>
+      <h2 class="section-title text-gradient">O Ambiente</h2>
+      <p class="text-cream/40 text-lg mt-4 max-w-xl mx-auto">Cada detalhe foi pensado para transportar você à China imperial</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {[
+        { title: 'Salão Principal', desc: 'Lustres de seda e madeira nobre', emoji: '🏮' },
+        { title: 'Terraço Jardim', desc: 'Bambuzais e lago de carpas', emoji: '🎋' },
+        { title: 'Sala VIP', desc: 'Experiência exclusiva e privativa', emoji: '👑' },
+      ].map((item, i) => (
+        <div class="glass-card p-8 text-center group cursor-default ornament-corner">
+          <span class="text-5xl block mb-6 group-hover:scale-110 transition-transform duration-500">{item.emoji}</span>
+          <h3 class="text-gold font-serif text-xl mb-3">{item.title}</h3>
+          <p class="text-cream/40 text-sm">{item.desc}</p>
+          <div class="mt-6 w-12 h-[1px] bg-gradient-to-r from-gold/60 to-transparent mx-auto"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

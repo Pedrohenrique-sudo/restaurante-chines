@@ -1,0 +1,273 @@
+---
+// Sistema profissional de animações de scroll
+// Usa Intersection Observer + classes CSS para performance máxima
+---
+
+<script>
+  // Registra o plugin ScrollTrigger se GSAP estiver disponível
+  let gsap, ScrollTrigger;
+  
+  async function initGSAP() {
+    try {
+      const gsapModule = await import('gsap');
+      const stModule = await import('gsap/ScrollTrigger');
+      gsap = gsapModule.default;
+      ScrollTrigger = stModule.ScrollTrigger;
+      gsap.registerPlugin(ScrollTrigger);
+      initScrollAnimations();
+    } catch (e) {
+      // Fallback: Intersection Observer puro
+      initFallbackAnimations();
+    }
+  }
+
+  function initScrollAnimations() {
+    // Revelação de seções com stagger
+    gsap.utils.toArray('.reveal-section').forEach((section, i) => {
+      const title = section.querySelector('.reveal-title');
+      const subtitle = section.querySelector('.reveal-subtitle');
+      const cards = section.querySelectorAll('.reveal-card');
+      const content = section.querySelector('.reveal-content');
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 75%',
+          end: 'bottom 25%',
+          toggleActions: 'play none none reverse',
+        }
+      });
+      
+      if (title) {
+        tl.from(title, {
+          y: 60,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+        });
+      }
+      
+      if (subtitle) {
+        tl.from(subtitle, {
+          y: 30,
+          opacity: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+        }, '-=0.4');
+      }
+      
+      if (cards.length) {
+        tl.from(cards, {
+          y: 80,
+          opacity: 0,
+          scale: 0.92,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power3.out',
+        }, '-=0.3');
+      }
+      
+      if (content) {
+        tl.from(content, {
+          y: 40,
+          opacity: 0,
+          duration: 0.7,
+          ease: 'power2.out',
+        }, '-=0.2');
+      }
+    });
+
+    // Parallax suave em imagens
+    gsap.utils.toArray('.parallax-img').forEach(img => {
+      gsap.to(img, {
+        yPercent: 15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: img.parentElement,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      });
+    });
+
+    // Elementos que aparecem com escala
+    gsap.utils.toArray('.scale-reveal').forEach(el => {
+      gsap.from(el, {
+        scale: 0.8,
+        opacity: 0,
+        duration: 1,
+        ease: 'elastic.out(1, 0.8)',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        },
+      });
+    });
+
+    // Texto que desliza da esquerda/direita
+    gsap.utils.toArray('.slide-left').forEach(el => {
+      gsap.from(el, {
+        x: -100,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse',
+        },
+      });
+    });
+
+    gsap.utils.toArray('.slide-right').forEach(el => {
+      gsap.from(el, {
+        x: 100,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse',
+        },
+      });
+    });
+
+    // Linha decorativa que desenha no scroll
+    gsap.utils.toArray('.draw-line').forEach(line => {
+      gsap.from(line, {
+        scaleX: 0,
+        transformOrigin: 'left center',
+        duration: 1.5,
+        ease: 'power2.inOut',
+        scrollTrigger: {
+          trigger: line,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        },
+      });
+    });
+  }
+
+  // Fallback com Intersection Observer
+  function initFallbackAnimations() {
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px',
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animated');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal-section, .reveal-card, .scale-reveal, .slide-left, .slide-right')
+      .forEach(el => observer.observe(el));
+  }
+
+  // Iniciar quando DOM estiver pronto
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGSAP);
+  } else {
+    initGSAP();
+  }
+</script>
+
+<style>
+  /* Estilos base para animações (usados pelo fallback e estados iniciais) */
+  .reveal-section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  .reveal-section.animated {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .reveal-card {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+    transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  .reveal-card.animated {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  
+  .scale-reveal {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+                transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .scale-reveal.animated {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  .slide-left {
+    opacity: 0;
+    transform: translateX(-80px);
+    transition: opacity 0.8s ease-out,
+                transform 0.8s ease-out;
+  }
+  
+  .slide-left.animated {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .slide-right {
+    opacity: 0;
+    transform: translateX(80px);
+    transition: opacity 0.8s ease-out,
+                transform 0.8s ease-out;
+  }
+  
+  .slide-right.animated {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .draw-line {
+    transform: scaleX(0);
+    transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform-origin: left center;
+  }
+  
+  .draw-line.animated {
+    transform: scaleX(1);
+  }
+
+  /* Stagger delay para cards */
+  .reveal-card:nth-child(1) { transition-delay: 0s; }
+  .reveal-card:nth-child(2) { transition-delay: 0.1s; }
+  .reveal-card:nth-child(3) { transition-delay: 0.2s; }
+  .reveal-card:nth-child(4) { transition-delay: 0.3s; }
+  .reveal-card:nth-child(5) { transition-delay: 0.4s; }
+  .reveal-card:nth-child(6) { transition-delay: 0.5s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-section,
+    .reveal-card,
+    .scale-reveal,
+    .slide-left,
+    .slide-right {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+</style>

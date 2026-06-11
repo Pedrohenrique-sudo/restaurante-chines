@@ -1,5 +1,24 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  site: 'https://SEU_USERNAME.github.io',
+  base: '/restaurante-chines',
+  
+  build: {
+    format: 'directory',
+  },
+  
+  vite: {
+    build: {
+      target: 'esnext',
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'three': ['three'],
+            'gsap': ['gsap'],
+          },
+        },
+      },
+    },
+  },
+});

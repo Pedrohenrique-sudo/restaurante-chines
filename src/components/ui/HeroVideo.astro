@@ -1,0 +1,88 @@
+<div id="hero-bg" class="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+  <div class="absolute inset-0 bg-[#0A0A0A]"></div>
+  <div class="absolute inset-0 bg-chinese-pattern z-[1]"></div>
+  
+  <!-- Slideshow de fundo (SEMPRE funciona) -->
+  <div id="hero-slideshow" class="absolute inset-0 opacity-45 z-[1]">
+    <div class="slideshow-images absolute inset-0">
+      <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=1920&q=80" class="absolute inset-0 w-full h-full object-cover animate-fade-slide brightness-125 contrast-110 saturate-110" style="animation-delay: 0s;" alt="Pato de Pequim" loading="eager" />
+      <img src="https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=1920&q=80" class="absolute inset-0 w-full h-full object-cover animate-fade-slide brightness-125 contrast-110 saturate-110" style="animation-delay: 3s;" alt="Dim Sum" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1555126634-323283e090fa?w=1920&q=80" class="absolute inset-0 w-full h-full object-cover animate-fade-slide brightness-125 contrast-110 saturate-110" style="animation-delay: 6s;" alt="Lamen" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1525755662778-989d0524087e?w=1920&q=80" class="absolute inset-0 w-full h-full object-cover animate-fade-slide brightness-125 contrast-110 saturate-110" style="animation-delay: 9s;" alt="Kung Pao Chicken" loading="lazy" />
+    </div>
+  </div>
+  
+  <div class="absolute inset-0 bg-gradient-to-b from-black/35 via-black/25 to-black/75 z-[2]"></div>
+  <div class="absolute inset-0 z-[3]" style="background: radial-gradient(ellipse at center, rgba(212,160,23,0.07) 0%, transparent 60%);"></div>
+  
+  <div class="absolute bottom-0 left-0 right-0 z-[4]">
+    <div class="steam-container">
+      {[1,2,3,4,5,6,7,8,9,10].map(i => (
+        <div class={`steam-particle steam-${i}`} />
+      ))}
+    </div>
+  </div>
+  
+  <div class="absolute inset-0 z-[4] overflow-hidden pointer-events-none">
+    <div class="lantern left-[10%] animate-float">🏮</div>
+    <div class="lantern right-[15%] animate-float-delayed" style="animation-delay: 2s;">🏮</div>
+    <div class="lantern left-[30%] animate-float" style="animation-delay: 4s; font-size: 3rem;">🏮</div>
+  </div>
+</div>
+
+<style>
+  @keyframes fadeSlide {
+    0% { opacity: 0; transform: scale(1.12); }
+    8% { opacity: 1; transform: scale(1); }
+    25% { opacity: 1; transform: scale(1); }
+    33% { opacity: 0; transform: scale(1.08); }
+    100% { opacity: 0; transform: scale(1.08); }
+  }
+  
+  .animate-fade-slide {
+    opacity: 0;
+    animation: fadeSlide 12s infinite;
+  }
+  
+  @keyframes rise {
+    0% { transform: translateY(100%) scale(0.3); opacity: 0; }
+    15% { opacity: 0.12; }
+    100% { transform: translateY(-300%) scale(2.5); opacity: 0; }
+  }
+  
+  .steam-particle {
+    position: absolute;
+    bottom: -50px;
+    width: 150px;
+    height: 200px;
+    background: radial-gradient(ellipse at center, rgba(212,160,23,0.07) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(20px);
+    animation: rise 10s infinite;
+  }
+  
+  .steam-1 { left: 5%; animation-delay: 0s; }
+  .steam-2 { left: 15%; animation-delay: 1.5s; }
+  .steam-3 { left: 25%; animation-delay: 3s; }
+  .steam-4 { left: 35%; animation-delay: 4.5s; }
+  .steam-5 { left: 45%; animation-delay: 6s; }
+  .steam-6 { left: 55%; animation-delay: 7.5s; }
+  .steam-7 { left: 65%; animation-delay: 2s; }
+  .steam-8 { left: 75%; animation-delay: 5s; }
+  .steam-9 { left: 85%; animation-delay: 8s; }
+  .steam-10 { left: 95%; animation-delay: 3.5s; }
+  
+  @keyframes floatLantern {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-30px) rotate(3deg); }
+  }
+  
+  .lantern {
+    position: absolute;
+    top: 10%;
+    font-size: 4rem;
+    opacity: 0.3;
+    animation: floatLantern 8s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(212,160,23,0.3));
+  }
+</style>
