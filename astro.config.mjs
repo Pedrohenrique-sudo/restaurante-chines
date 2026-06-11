@@ -1,24 +1,9 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://SEU_USERNAME.github.io',
+  site: 'https://pedrohenrique-sudo.github.io',
   base: '/restaurante-chines',
-  
   build: {
     format: 'directory',
-  },
-  
-  vite: {
-    build: {
-      target: 'esnext',
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            'three': ['three'],
-            'gsap': ['gsap'],
-          },
-        },
-      },
-    },
   },
 });
